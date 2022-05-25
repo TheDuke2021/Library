@@ -1,0 +1,25 @@
+<header id="header" class="hoc clear">
+    <!-- ################################################################################################ -->
+    <div id="logo" class="fl_left">
+        <h1><a th:href="@{/}">Библиотека №64</a></h1>
+    </div>
+    <div id="quickinfo" class="fl_right">
+        <ul class="nospace inline">
+            <li><strong>Телефон:</strong><br>
+                +74991132595</li>
+            <li><strong>Режим работы:</strong><br>
+                Пн-Пт: 09:00 - 18:00
+                Сб: 09:00 - 16:00
+                Вс: выходной</li>
+        </ul>
+    </div>
+    <hr>
+    <div id="login" class="fl_right">
+        <img th:src="@{/images/common/login.png}"/>
+        <a th:href="@{/login}" th:if="!${#authentication.principal}">Войти</a>
+        <a th:href="@{/login}" th:if="${#authentication.principal}"
+           th:text="${#authentication.principal.username}">
+            </a>
+    </div>
+    <!-- ################################################################################################ -->
+</header>
