@@ -1,0 +1,72 @@
+//CREATE TYPE Genre AS ENUM
+//('Детектив',
+//'Приключения',
+//'Фантастика',
+//'Роман',
+//'Юмор',
+//'Комиксы',
+//'Детские книги',
+//'Научные книги',
+//'Справочные книги');
+
+//CREATE TYPE Role AS ENUM
+//('USER',
+//'ADMIN');
+
+CREATE TABLE Books(
+  id SERIAL PRIMARY KEY,
+  isbn VARCHAR(30) NOT NULL,
+  name VARCHAR(50) NOT NULL,
+  genre VARCHAR(50) NOT NULL,
+  author VARCHAR(50) NOT NULL,
+  publisher VARCHAR(50) NOT NULL,
+  pages INT NOT NULL,
+  quantity INT NOT NULL,
+  issueyear INT,
+  description VARCHAR,
+  cover BYTEA
+);
+
+CREATE TABLE Borrowed_Books(
+  userid INT NOT NULL,
+  itemid SERIAL NOT NULL,
+  bookid INT NOT NULL,
+  borrowdate TIMESTAMP NOT NULL,
+  duedate TIMESTAMP NOT NULL,
+  returned BOOLEAN NOT NULL
+);
+
+CREATE TABLE Favorite_Books(
+  userid INT NOT NULL,
+  itemid SERIAL NOT NULL,
+  bookid INT NOT NULL,
+  date TIMESTAMP NOT NULL
+);
+
+CREATE TABLE Users(
+  id SERIAL PRIMARY KEY,
+  firstname VARCHAR(50) NOT NULL,
+  lastname VARCHAR(50) NOT NULL,
+  username VARCHAR(50) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  street VARCHAR(50) NOT NULL,
+  house VARCHAR(20) NOT NULL,
+  phonenumber VARCHAR(50) NOT NULL,
+  registrationdate TIMESTAMP NOT NULL,
+  profilepicture BYTEA,
+  role VARCHAR(50) NOT NULL
+);
+
+
+ALTER TABLE Borrowed_Books ADD PRIMARY KEY (userid, itemid);
+ALTER TABLE Favorite_Books ADD PRIMARY KEY (userid, itemid);
+
+
+ALTER TABLE Borrowed_Books ADD CONSTRAINT FK_Borrowed_Books_Books
+FOREIGN KEY (bookid) REFERENCES Books (id);
+ALTER TABLE Borrowed_Books ADD CONSTRAINT FK_Borrowed_Books_Users
+FOREIGN KEY (userid) REFERENCES Users (id);
+ALTER TABLE Favorite_Books ADD CONSTRAINT FK_Favorite_Books_Books
+FOREIGN KEY (bookid) REFERENCES Books (id);
+ALTER TABLE Favorite_Books ADD CONSTRAINT FK_Favorite_Books_Users
+FOREIGN KEY (userid) REFERENCES Users (id);

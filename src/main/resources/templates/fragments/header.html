@@ -15,11 +15,15 @@
     </div>
     <hr>
     <div id="login" class="fl_right">
-        <img th:src="@{/images/common/login.png}"/>
-        <a th:href="@{/login}" th:if="!${#authentication.principal}">Войти</a>
-        <a th:href="@{/login}" th:if="${#authentication.principal}"
-           th:text="${#authentication.principal.username}">
-            </a>
+
+        <a th:href="@{/login}" th:if="${#authentication.getName().equals('anonymousUser')}">
+            <img th:src="@{/images/common/login.png}"/>
+            Войти</a>
+        <a th:href="@{/profile}" th:if="${!#authentication.getName().equals('anonymousUser')}"
+           th:text="${#authentication.getName()}"></a>
+        <a th:href="@{/logout}" th:if="${!#authentication.getName().equals('anonymousUser')}">
+            <img th:src="@{/images/common/logout.png}" />
+        </a>
     </div>
     <!-- ################################################################################################ -->
 </header>

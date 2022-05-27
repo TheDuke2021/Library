@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"></head>
+<body>
+<div class="wrapper row1">
+    <header th:replace="fragments/header"></header>
+</div>
+<div class="wrapper row2">
+    <nav th:replace="fragments/nav"></nav>
+</div>
+<div class="colm-form" style="background-color: #ffffff;">
+    <div class="form-container">
+        <h2>Вход в аккаунт</h2>
+        <form method="POST" th:action="@{/login}">
+        <input type="text" name="username" placeholder="Имя пользователя">
+        <input type="password" name="password" placeholder="Пароль">
+        <div th:if="${error}">Произошла ошибка входа. Проверьте логин и пароль</div>
+        <button class="btn-login">Войти</button>
+        <a href="#">Забыли пароль?</a>
+        <p>Нет аккаунта? <a th:href="@{/registration}">Зарегистироваться</a></p>
+        </form>
+    </div>
+</div>
+<div class="wrapper row4">
+    <footer th:replace="fragments/footer"></footer>
+</div>
+<!-- JAVASCRIPTS -->
+<script th:src="@{layout/scripts/jquery.min.js}"></script>
+<script th:src="@{layout/scripts/jquery.backtotop.js}"></script>
+<script th:src="@{layout/scripts/jquery.mobilemenu.js}"></script>
+<script th:src="@{layout/scripts/library.js}"></script>
+</body>
+</html>

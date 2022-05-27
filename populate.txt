@@ -1,0 +1,2 @@
+INSERT INTO Books (isbn, name, genre, author, publisher, pages, quantity, issueyear, description)
+VALUES ('654654', 'Мастер и Маргарита', 'Детектив', 'Булгаков Михалка', 'Регард', 250, 10, 1997, 'бла бла бла ыфвфывыфвыфвыфвыфвфывыфвыфвыфвыфвыфвыфв');

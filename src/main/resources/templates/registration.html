@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"></head>
+<body>
+<div class="wrapper row1">
+  <header th:replace="fragments/header"></header>
+</div>
+<div class="wrapper row2">
+  <nav th:replace="fragments/nav"></nav>
+</div>
+<div class="colm-form" style="background-color: #ffffff;">
+  <div class="form-container">
+    <h2>Регистрация</h2>
+    <form method="POST" th:action="@{/registration}" th:object="${registrationForm}">
+      <input type="text" name="firstname" placeholder="Имя">
+      <input type="text" name="lastname" placeholder="Фамилия">
+      <input type="text" name="username" placeholder="Логин">
+      <input type="password" name="password" placeholder="Пароль">
+      <input type="password" name="confirm" placeholder="Подтверждение пароля">
+      <input type="text" name="street" placeholder="Улица">
+      <input type="text" name="house" placeholder="Дом">
+      <input type="text" name="phonenumber" placeholder="Номер телефона">
+      <p>Регистрируясь, вы соглашаетесь с нашими <a href="#">условиями пользования</a></p>
+      <button class="btn-login">Зарегистрироваться</button>
+      <p>Уже есть аккаунт? <a th:href="@{/login}">Войти</a></p>
+    </form>
+  </div>
+</div>
+<div class="wrapper row4">
+  <footer th:replace="fragments/footer"></footer>
+</div>
+<!-- JAVASCRIPTS -->
+<script th:src="@{layout/scripts/jquery.min.js}"></script>
+<script th:src="@{layout/scripts/jquery.backtotop.js}"></script>
+<script th:src="@{layout/scripts/jquery.mobilemenu.js}"></script>
+<script th:src="@{layout/scripts/library.js}"></script>
+</body>
+</html>
