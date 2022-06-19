@@ -2,6 +2,7 @@ package com.example.Library.controllers;
 
 import com.example.Library.RegistrationForm;
 import com.example.Library.data.UserRepository;
+import com.example.Library.entities.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +28,13 @@ public class RegistrationController {
 
     @PostMapping
     public String processRegistration(RegistrationForm form) {
-        userRepository.save(form.toUser(passwordEncoder));
+        User user = form.toUser(passwordEncoder);
+        //Checking whether a user with the same username exists
+        if(userRepository.findByUsername(user.getUsername()) != null) {
+            //TODO
+        }
+
+        userRepository.save(user);
         return "redirect:/";
     }
 }

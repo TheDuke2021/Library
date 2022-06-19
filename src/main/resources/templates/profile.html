@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${user.username}">username</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <th:block th:insert="fragments/head"></th:block>
+</head>
+<body>
+<div class="wrapper row1">
+    <header th:replace="fragments/header"></header>
+</div>
+<div class="wrapper row2">
+    <nav th:replace="fragments/nav"></nav>
+</div>
+<div class="profile-container">
+    <img th:src="@{/images/profile/default-profile-pic.png}"
+         width="128" height="128" />
+    <div class="profile-info">
+        <p><b>Имя: </b><span th:text="${user.firstname}"></span></p>
+        <p><b>Фамилия: </b><span th:text="${user.lastname}"></span></p>
+        <p><b>Логин: </b><span th:text="${user.username}"></span></p>
+        <p><b>Адрес: </b><span th:text="${user.street} + ', ' + ${user.house}"></span></p>
+        <p><b>Номер телефона: </b><span th:text="${user.phonenumber}"></span></p>
+        <p><b>Дата регистрации: </b><span th:text="${user.registrationdate}"></span></p>
+    </div>
+    <div class="profile-toggle-buttons">
+        <a data-toggle="tab" href="#borrowed">
+            <button class="borrowed-books-btn"><span>Взятые книги</span></button>
+        </a>
+        <a data-toggle="tab" href="#favorite">
+            <button class="favorite-books-btn"><span>Избранные книги</span></button>
+        </a>
+    </div>
+    <div class="profile-books tab-content">
+        <div id="borrowed" class="borrowed-books tab-pane fade in active">
+            <div class="borrowed-book" th:each="borrowedBook: ${user.borrowedBooks}">
+                <a th:href="'/book/' + ${borrowedBook.book.id}"><img style="float:left;width:120px; max-height:192px; height:192px;"th:src="'data:image/png;base64,' + ${imgUtil.getImgData(borrowedBook.book.cover)}"></a>
+                <p th:text="${borrowedBook.book.name}"></p>
+                <p th:text="${borrowedBook.book.author}"></p>
+                <p th:text="${borrowedBook.book.publisher}"></p>
+                <p th:text="'Дата выдачи: ' + ${borrowedBook.borrowdate}"></p>
+                <p th:text="'Вернуть до: '+  ${borrowedBook.duedate}"></p>
+                <p th:text="'Возвращено:'"></p>
+                <img style="display:inline;width:20px;height:20px;" th:src="@{/images/profile/check.png}" th:if="${borrowedBook.returned}">
+                <img style="display:inline;width:20px;height:20px;" th:src="@{/images/profile/cancel.png}" th:if="${!borrowedBook.returned}">
+            </div>
+        </div>
+        <div id="favorite" class="favorite-books tab-pane fade">
+            <div class="favorite-book" th:each="favoriteBook: ${user.favoriteBooks}"></div>
+        </div>
+    </div>
+</div>
+<div class="wrapper row4">
+    <footer th:replace="fragments/footer"></footer>
+</div>
+<!-- JAVASCRIPTS -->
+<!--
+<script th:src="@{layout/scripts/jquery.min.js}"></script>
+<script th:src="@{layout/scripts/jquery.backtotop.js}"></script>
+<script th:src="@{layout/scripts/jquery.mobilemenu.js}"></script>
+<script th:src="@{layout/scripts/library.js}"></script>
+-->
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Админ панель</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <th:block th:insert="fragments/head"></th:block>
+</head>
+<body style="color: black; background-color: white;">
+<div class="admin-panel">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#user-add" data-toggle="tab">Добавить пользователя</a></li>
+        <li><a href="#user-edit" data-toggle="tab">Редактировать пользователя</a></li>
+        <li ><a href="#book-add" data-toggle="tab">Добавить книгу</a></li>
+        <li ><a href="#book-edit" data-toggle="tab">Редактировать книгу</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="user-add">
+            <form method="POST" th:action="@{/admin/user/add}" th:object="${registrationForm}">
+                <input type="text" name="firstname" placeholder="Имя">
+                <input type="text" name="lastname" placeholder="Фамилия">
+                <input type="text" name="username" placeholder="Логин">
+                <input type="password" name="password" placeholder="Пароль">
+                <input type="password" name="confirm" placeholder="Подтверждение пароля">
+                <input type="text" name="street" placeholder="Улица">
+                <input type="text" name="house" placeholder="Дом">
+                <input type="text" name="phonenumber" placeholder="Номер телефона">
+                <input type="submit" value="Отправить">
+            </form>
+        </div>
+        <div class="tab-pane" id="user-edit">
+            <form method="GET" th:action="@{/admin/user/edit}">
+            <select name="id">
+                <option th:each="user: ${users}"
+                        th:text="'id: ' + ${user.id} + ', username: ' + ${user.username} + ', firstname: ' + ${user.firstname} + ', lastname: ' + ${user.lastname}"></option>
+            </select>
+                <input type="submit" value="Загрузить">
+            </form>
+            <form th:if="${user != null}" method="POST" th:action="@{/admin/user/edit}" th:object="${newUser}">
+                <p>Пользователь:</p>
+                <input type="hidden" name="id"  th:value="${user.id}">
+                <input type="text" name="firstname" placeholder="Имя" th:value="${user.firstname}">
+                <input type="text" name="lastname" placeholder="Фамилия" th:value="${user.lastname}">
+                <input type="text" name="username" placeholder="Username" th:value="${user.username}">
+                <input type="text" name="street" placeholder="Улица" th:value="${user.street}">
+                <input type="text" name="house" placeholder="Дом" th:value="${user.house}">
+                <input type="text" name="phonenumber" placeholder="Номер телефона" th:value="${user.phonenumber}">
+                <p>Книги:</p>
+                <ul id="borrowed-books">
+                    <li th:each="borrowedBook, stat : ${user.borrowedBooks}">
+                        <span>Название: </span>
+                        <select th:name="|borrowedBooks[${stat.index}].book.name|">
+                            <option th:each="book: ${books}"
+                                    th:selected="${borrowedBook.book.id eq book.id}"
+                                    th:text="'id: ' + ${book.id} + ', name: ' + ${book.name} + ', author: ' + ${book.author}"></option>
+                        </select>
+                        <!--
+                        <input type="text" th:name="|borrowedBooks[${stat.index}].itemid|"
+                               th:value="${borrowedBook.itemid}" />
+                        -->
+                        <span>Дата выдачи: </span>
+                        <input type="date" th:name="|borrowedBooks[${stat.index}].borrowdate|" th:value="${{borrowedBook.borrowdate}}">
+                        <span>Вернуть до: </span>
+                        <input type="date" th:name="|borrowedBooks[${stat.index}].duedate|" th:value="${{borrowedBook.duedate}}">
+                        <span>Возвращено: </span>
+                        <select th:name="|borrowedBooks[${stat.index}].returned|">
+                            <option th:selected="${borrowedBook.returned eq true}">true</option>
+                            <option th:selected="${borrowedBook.returned eq false}">false</option>
+                        </select>
+                    </li>
+                </ul>
+                <input type="submit" value="Отправить">
+            </form>
+            <form th:if="${user != null}" method="POST" th:action="@{/admin/user/edit/new}" th:object="${newUser}">
+                <input type="hidden" name="id"  th:value="${user.id}">
+                <input type="submit" value="Новый">
+            </form>
+        </div>
+        <div class="tab-pane" id="book-add">
+            <form method="POST" th:action="@{/admin/book/add}" th:object="${book}" enctype="multipart/form-data">
+                <input type="text" name="isbn" placeholder="ISBN">
+                <input type="text" name="name" placeholder="Название">
+                <span>Жанр:</span>
+                <select name="genre">
+                    <option th:each="genre: ${genres}" th:text="${genre}"></option>
+                </select>
+                <input type="text" name="author" placeholder="Автор">
+                <input type="text" name="publisher" placeholder="Издательство">
+                <input type="text" name="pages" placeholder="Кол-во страниц">
+                <input type="text" name="quantity" placeholder="Кол-во">
+                <input type="text" name="issueyear" placeholder="Год выпуска">
+                <input type="text" name="description" placeholder="Описание">
+                <span>Обложка:</span>
+                <input type="file" name="file" placeholder="Обложка">
+                <input type="submit" value="Отправить">
+            </form>
+        </div>
+        <div class="tab-pane" id="book-edit">
+             booook ediit
+        </div>
+    </div>
+</div>
+<!-- JAVASCRIPTS -->
+<script th:src="@{layout/scripts/jquery.min.js}"></script>
+<script th:src="@{layout/scripts/jquery.backtotop.js}"></script>
+<script th:src="@{layout/scripts/jquery.mobilemenu.js}"></script>
+<script th:src="@{layout/scripts/library.js}"></script>
+<!--
+<script>
+"use strict"
+
+    window.onload = function() {
+        const button = document.getElementById('borrowed-book-add');
+        const list = document.getElementById('borrowed-books');
+        const lastLi = list.lastElementChild.children[1].name;
+        const index = lastLi.substring(lastLi.indexOf("[")+1, lastLi.indexOf("]"));
+
+
+        button.addEventListener("click", function() {
+            button.hidden = "";
+            const newLi = document.createElement("li");
+            li.innerHTML = '                        <span>Название: </span>
+                        <select name="borrowedBooks[' + index + '].book.name|">
+                            <option th:each="book: ${books}"
+                                    th:selected="${borrowedBook.book.id eq book.id}"
+                                    th:text="'id: ' + ${book.id} + ', name: ' + ${book.name} + ', author: ' + ${book.author}"></option>
+                        </select>
+                        <span>Дата выдачи: </span>
+                        <input type="date" th:name="|borrowedBooks[${stat.index}].borrowdate|" th:value="${{borrowedBook.borrowdate}}">
+                        <span>Вернуть до: </span>
+                        <input type="date" th:name="|borrowedBooks[${stat.index}].duedate|" th:value="${{borrowedBook.duedate}}">
+                        <span>Возвращено: </span>
+                        <select th:name="|borrowedBooks[${stat.index}].returned|">
+                            <option th:selected="${borrowedBook.returned eq true}">true</option>
+                            <option th:selected="${borrowedBook.returned eq false}">false</option>
+                        </select>';
+        });
+
+    }
+</script>
+-->
+</body>
+</html>

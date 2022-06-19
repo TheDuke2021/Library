@@ -2,6 +2,9 @@ package com.example.Library.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,13 +37,15 @@ public class User implements UserDetails {
     private String house;
     private String phonenumber;
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date registrationdate;
     private byte[] profilepicture;
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany
+    @OneToMany(orphanRemoval = true)
     @JoinColumn(name = "userid")
+    @NotFound(action = NotFoundAction.IGNORE)
     private List<BorrowedBook> borrowedBooks;
 
     @OneToMany

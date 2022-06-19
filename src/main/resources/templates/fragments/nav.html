@@ -2,32 +2,21 @@
     <!-- ################################################################################################ -->
     <ul class="clear">
         <li class="active"><a th:href="@{/}">Главная</a></li>
-        <li><a class="drop" th:href="@{/books}">Книги</a>
+        <li><a class="drop" th:href="@{/books/1}">Книги</a>
             <ul>
-                <li><a href="pages/gallery.html">Gallery</a></li>
-                <li><a href="pages/full-width.html">Full Width</a></li>
-                <li><a href="pages/sidebar-left.html">Sidebar Left</a></li>
-                <li><a href="pages/sidebar-right.html">Sidebar Right</a></li>
-                <li><a href="pages/basic-grid.html">Basic Grid</a></li>
+                <li th:each="genre: ${T(com.example.Library.entities.Book$Genre).values()}">
+                    <a href="#" th:text="${genre}"></a></li>
             </ul>
         </li>
-        <li><a class="drop" href="#">Dropdown</a>
+        <li><a class="drop" href="#">Авторы</a>
             <ul>
-                <li><a href="#">Level 2</a></li>
-                <li><a class="drop" href="#">Level 2 + Drop</a>
-                    <ul>
-                        <li><a href="#">Level 3</a></li>
-                        <li><a href="#">Level 3</a></li>
-                        <li><a href="#">Level 3</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">Level 2</a></li>
+                <li><a href="#">А.С. Пушкин</a></li>
+                <li><a href="#">Л.Н. Толстой</a></li>
+                <li><a href="#">М.Ю. Лермонтов</a></li>
             </ul>
         </li>
-        <li><a href="#">Link Text</a></li>
-        <li><a href="#">Link Text</a></li>
-        <li><a href="#">Link Text</a></li>
-        <li><a href="#">Long Link Text</a></li>
+        <li><a href="#">Популярное</a></li>
+        <li><a href="#">Рецензии</a></li>
     </ul>
     <!-- ################################################################################################ -->
 </nav>

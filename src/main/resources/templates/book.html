@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${book.name}">Библиотека №64</title>
+    <th:block th:insert="fragments/head"></th:block>
+</head>
+<body id="top">
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<div class="wrapper row1">
+    <header th:replace="fragments/header"></header>
+</div>
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<div class="wrapper row2">
+    <nav th:replace="fragments/nav"></nav>
+</div>
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<div class="book-container">
+    <div class="book-info">
+        <img style="float:left; max-height: 200px; margin-right: 30px;" th:src="'data:image/png;base64,' + ${imgUtil.getImgData(book.cover)}">
+        <p><b>ISBN: </b><span th:text="${book.isbn}"></span></p>
+        <p><b>Название: </b><span th:text="${book.name}"></span></p>
+        <p><b>Жанр: </b><span th:text="${book.genre}"></span></p>
+        <p><b>Автор: </b><span th:text="${book.author}"></span></p>
+        <p><b>Издательство: </b><span th:text="${book.publisher}"></span></p>
+        <p><b>Кол-во страниц: </b><span th:text="${book.pages}"></span></p>
+        <p><b>Год выпуска: </b><span th:text="${book.issueyear}"></span></p>
+    </div>
+    <div class="book-desc">
+        <p th:text="${book.description}"></p>
+    </div>
+    <div class="book-availability">
+        <span th:if="${book.quantity > 0}">Есть в наличии</span>
+        <span th:if="${book.quantity <= 0}">Нет в наличии</span>
+
+    </div>
+</div>
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<div class="wrapper row4">
+    <footer th:replace="fragments/footer"></footer>
+</div>
+<div th:replace="fragments/copyright"></div>
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<a id="backtotop" href="#top"><i class="fa fa-chevron-up"></i></a>
+<!-- JAVASCRIPTS -->
+<script th:src="@{layout/scripts/jquery.min.js}"></script>
+<script th:src="@{layout/scripts/jquery.backtotop.js}"></script>
+<script th:src="@{layout/scripts/jquery.mobilemenu.js}"></script>
+<script th:src="@{layout/scripts/library.js}"></script>
+</body>
+</html>
