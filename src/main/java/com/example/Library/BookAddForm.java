@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 public class BookAddForm {
 
+    public Integer id;
     public String isbn;
     public String name;
     public Book.Genre genre;

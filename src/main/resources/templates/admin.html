@@ -99,7 +99,31 @@
             </form>
         </div>
         <div class="tab-pane" id="book-edit">
-             booook ediit
+            <form method="GET" th:action="@{/admin/book/edit}">
+                <select name="id">
+                    <option th:each="book: ${books}"
+                            th:text="'id: ' + ${book.id} + ', name: ' + ${book.name} + ', author: ' + ${book.author}"></option>
+                </select>
+                <input type="submit" value="Загрузить">
+            </form>
+            <form th:if="${book != null}" method="POST" th:action="@{/admin/book/edit}" th:object="${newBook}" enctype="multipart/form-data">
+                <input type="hidden" name="id"  th:value="${book.id}">
+                <input type="text" name="isbn" placeholder="ISBN" th:value="${book.isbn}">
+                <input type="text" name="name" placeholder="Название" th:value="${book.name}">
+                <span>Жанр:</span>
+                <select name="genre">
+                    <option th:selected="${genre eq book.genre}" th:each="genre: ${genres}" th:text="${genre}"></option>
+                </select>
+                <input type="text" name="author" placeholder="Автор" th:value="${book.author}">
+                <input type="text" name="publisher" placeholder="Издательство" th:value="${book.publisher}">
+                <input type="text" name="pages" placeholder="Кол-во страниц" th:value="${book.pages}">
+                <input type="text" name="quantity" placeholder="Кол-во" th:value="${book.quantity}">
+                <input type="text" name="issueyear" placeholder="Год выпуска" th:value="${book.issueyear}">
+                <input type="text" name="description" placeholder="Описание" th:value="${book.description}">
+                <span>Обложка:</span>
+                <input type="file" name="file" placeholder="Обложка">
+                <input type="submit" value="Отправить">
+            </form>
         </div>
     </div>
 </div>

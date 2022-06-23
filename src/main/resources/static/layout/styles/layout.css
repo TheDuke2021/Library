@@ -545,7 +545,11 @@ Profile page
     padding: 50px 500px 0 50px;
 }
 
-.profile-container p {
+.profile-container p{
+    color: black;
+}
+
+.profile-container span{
     color: black;
 }
 
@@ -592,7 +596,7 @@ Profile page
 .favorite-book, .borrowed-book {
     padding: 10px;
     width: 100%;
-    border: solid black 3px;
+    border: solid black 2px;
     border-radius: 30px;
 }
 

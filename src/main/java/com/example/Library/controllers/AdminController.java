@@ -171,4 +171,37 @@ public class AdminController {
 
         return out.toByteArray();
     }
+
+    @GetMapping("/admin/book/edit")
+    public String bookLoad(@RequestParam("id")String id, Model model) {
+        model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("books", bookRepository.findAll());
+        model.addAttribute("genres", Book.Genre.values());
+
+        id = id.substring(id.indexOf("id: ") + 4, id.indexOf(","));
+        Book book = bookRepository.findById(Integer.parseInt(id));
+        model.addAttribute("book", book);
+
+        return "admin";
+    }
+
+    @PostMapping("/admin/book/edit")
+    public String bookEdit(@ModelAttribute("newBook") BookAddForm newBook, Model model) {
+        Book book = bookRepository.findById(newBook.getId());
+        book.setIsbn(newBook.getIsbn());
+        book.setName(newBook.getName());
+        book.setGenre(newBook.getGenre());
+        book.setAuthor(newBook.getAuthor());
+        book.setPublisher(newBook.getPublisher());
+        book.setPages(newBook.getPages());
+        book.setQuantity(newBook.getQuantity());
+        book.setIssueyear(newBook.getIssueyear());
+        book.setDescription(newBook.getDescription());
+        if(!newBook.getFile().isEmpty())
+            book.setCover(imageToByteArray(newBook.getFile()));
+
+        bookRepository.save(book);
+
+        return "redirect:/admin";
+    }
 }

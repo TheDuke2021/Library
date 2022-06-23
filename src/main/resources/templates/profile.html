@@ -35,16 +35,17 @@
     </div>
     <div class="profile-books tab-content">
         <div id="borrowed" class="borrowed-books tab-pane fade in active">
-            <div class="borrowed-book" th:each="borrowedBook: ${user.borrowedBooks}">
+            <p style="margin-bottom: 15px">Пожалуйста, возвращайте взятые книги вовремя. В противном случае могут быть применены санкционные меры.</p>
+            <div th:style="${!borrowedBook.returned ? 'background-color: rgba(255, 0, 0, 0.25)' : 'background-color: rgba(0, 255, 0, 0.25)'}" class="borrowed-book" th:each="borrowedBook: ${user.borrowedBooks}">
                 <a th:href="'/book/' + ${borrowedBook.book.id}"><img style="float:left;width:120px; max-height:192px; height:192px;"th:src="'data:image/png;base64,' + ${imgUtil.getImgData(borrowedBook.book.cover)}"></a>
                 <p th:text="${borrowedBook.book.name}"></p>
                 <p th:text="${borrowedBook.book.author}"></p>
                 <p th:text="${borrowedBook.book.publisher}"></p>
                 <p th:text="'Дата выдачи: ' + ${borrowedBook.borrowdate}"></p>
                 <p th:text="'Вернуть до: '+  ${borrowedBook.duedate}"></p>
-                <p th:text="'Возвращено:'"></p>
-                <img style="display:inline;width:20px;height:20px;" th:src="@{/images/profile/check.png}" th:if="${borrowedBook.returned}">
-                <img style="display:inline;width:20px;height:20px;" th:src="@{/images/profile/cancel.png}" th:if="${!borrowedBook.returned}">
+                <span th:text="'Возвращено:'"></span>
+                <img style="display:inline;width:20px;height:20px;" th:src="@{/images/profile/check.png}" th:if="${borrowedBook.returned}" alt="Да">
+                <img style="display:inline;width:20px;height:20px;" th:src="@{/images/profile/cancel.png}" th:if="${!borrowedBook.returned}" alt="Нет">
             </div>
         </div>
         <div id="favorite" class="favorite-books tab-pane fade">
